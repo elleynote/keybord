@@ -6,7 +6,7 @@ import { OnScreenKeyboard } from "@/components/OnScreenKeyboard";
 import { PromoSidebar } from "@/components/PromoSidebar";
 import { SegmentedControl } from "@/components/SegmentedControl";
 import { VocabularyPanel } from "@/components/VocabularyPanel";
-import { applyEditorKey, countCharacters, countWords, extractArmenianWords } from "@/lib/editor-text";
+import { applyEditorKey, countCharacters, countWords } from "@/lib/editor-text";
 import { PHONETIC_KEY_MAP } from "@/lib/keyboard-layouts";
 import { applyOrthographyPreference } from "@/lib/orthography";
 import { runAIAction } from "@/lib/client-ai";
@@ -132,22 +132,6 @@ export function KeyboardApp() {
     }
   }
 
-  function saveWords() {
-    const armenianWords = extractArmenianWords(preferences.text);
-    if (armenianWords.length === 0) return setStatus("Type some Armenian words before saving vocabulary.");
-    const existing = new Set(vocabulary.map((entry) => entry.armenian));
-    const additions = armenianWords.filter((word) => !existing.has(word)).map((word) => ({
-      id: `${Date.now()}-${word}`,
-      armenian: word,
-      transliteration: transliterate(word, preferences.dialect),
-      createdAt: new Date().toISOString(),
-    }));
-    const next = [...additions, ...vocabulary];
-    setVocabulary(next);
-    saveVocabulary(next);
-    setStatus(additions.length ? `${additions.length} word${additions.length === 1 ? "" : "s"} saved to vocabulary.` : "Those words are already in your vocabulary.");
-  }
-
   function removeVocabulary(id: string) {
     const next = vocabulary.filter((entry) => entry.id !== id);
     setVocabulary(next);
@@ -161,65 +145,67 @@ export function KeyboardApp() {
 
   return (
     <>
-      <div className="page-shell keyboard-layout-shell">
-        <main className="keyboard-main-column">
-          <section className="tool-card" aria-labelledby="keyboard-title">
-            <div className="tool-intro">
-              <p className="eyebrow">Free Armenian typing tool</p>
-              <h1 id="keyboard-title">Armenian Keyboard</h1>
-              <p>Type Western or Eastern Armenian online, use a standard or phonetic layout, copy your text and access useful Armenian learning tools.</p>
-            </div>
+      <div className="page-shell">
+        <div className="keyboard-layout-shell">
+          <main className="keyboard-main-column">
+            <section className="tool-card" aria-labelledby="keyboard-title">
+              <div className="tool-intro">
+                <p className="eyebrow">Free Armenian typing tool</p>
+                <h1 id="keyboard-title">Armenian Keyboard</h1>
+                <p>Type Western or Eastern Armenian online, use a standard or phonetic layout, copy your text and access useful Armenian learning tools.</p>
+              </div>
 
-            <div className="control-grid">
-              <SegmentedControl label="Dialect" value={preferences.dialect} options={dialectOptions} onChange={(dialect: Dialect) => updatePreferences({ dialect })} />
-              <SegmentedControl label="Keyboard layout" value={preferences.layout} options={layoutOptions} onChange={(layout: KeyboardLayout) => updatePreferences({ layout })} />
-              <SegmentedControl label="Orthography" value={preferences.orthography} options={orthographyOptions} onChange={(orthography: Orthography) => updatePreferences({ orthography, text: applyOrthographyPreference(preferences.text, orthography) })} />
-            </div>
+              <div className="control-grid">
+                <SegmentedControl label="Dialect" value={preferences.dialect} options={dialectOptions} onChange={(dialect: Dialect) => updatePreferences({ dialect })} />
+                <SegmentedControl label="Keyboard layout" value={preferences.layout} options={layoutOptions} onChange={(layout: KeyboardLayout) => updatePreferences({ layout })} />
+                <SegmentedControl label="Orthography" value={preferences.orthography} options={orthographyOptions} onChange={(orthography: Orthography) => updatePreferences({ orthography, text: applyOrthographyPreference(preferences.text, orthography) })} />
+              </div>
 
-            <div className="editor-wrap">
-              <label className="sr-only" htmlFor="armenian-editor">Armenian text</label>
-              <textarea
-                id="armenian-editor"
-                ref={textareaRef}
-                className="armenian-editor armenian-text"
-                value={preferences.text}
-                onChange={(event: ChangeEvent<HTMLTextAreaElement>) => updatePreferences({ text: event.target.value })}
-                onKeyDown={handlePhysicalKey}
-                placeholder="Սկսեք գրել հայերեն…"
-                spellCheck={false}
-                maxLength={5000}
-              />
-              <div className="editor-toolbar">
-                <div className="editor-counts"><span>Characters: {characters}</span><span>Words: {words}</span></div>
-                <div className="editor-actions">
-                  <button type="button" onClick={listen}>◖ Listen</button>
-                  <button type="button" onClick={() => updatePreferences({ text: "" })}>⌫ Clear</button>
-                  <button type="button" onClick={() => void pasteText()}>▣ Paste</button>
-                  <button type="button" onClick={() => void copyText()}>▢ Copy</button>
+              <div className="editor-wrap">
+                <label className="sr-only" htmlFor="armenian-editor">Armenian text</label>
+                <textarea
+                  id="armenian-editor"
+                  ref={textareaRef}
+                  className="armenian-editor armenian-text"
+                  value={preferences.text}
+                  onChange={(event: ChangeEvent<HTMLTextAreaElement>) => updatePreferences({ text: event.target.value })}
+                  onKeyDown={handlePhysicalKey}
+                  placeholder="Սկսեք գրել հայերեն…"
+                  spellCheck={false}
+                  maxLength={5000}
+                />
+                <div className="editor-toolbar">
+                  <div className="editor-counts"><span>Characters: {characters}</span><span>Words: {words}</span></div>
+                  <div className="editor-actions">
+                    <button type="button" onClick={listen}>◖ Listen</button>
+                    <button type="button" onClick={() => updatePreferences({ text: "" })}>⌫ Clear</button>
+                    <button type="button" onClick={() => void pasteText()}>▣ Paste</button>
+                    <button type="button" onClick={() => void copyText()}>▢ Copy</button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <OnScreenKeyboard dialect={preferences.dialect} layout={preferences.layout} orthography={preferences.orthography} shift={shift} onToggleShift={() => setShift((value) => !value)} onKeyPress={insertKey} />
+              <OnScreenKeyboard dialect={preferences.dialect} layout={preferences.layout} orthography={preferences.orthography} shift={shift} onToggleShift={() => setShift((value) => !value)} onKeyPress={insertKey} />
 
-            <div className="quick-actions-row">
-              <button type="button" className="secondary-button" onClick={() => setVocabularyOpen(true)}>Saved vocabulary <span className="count-badge">{vocabulary.length}</span></button>
-              <span className="keyboard-note">Phonetic mode also maps common Latin letter keys while you type.</span>
-            </div>
+              <div className="quick-actions-row">
+                <button type="button" className="secondary-button" onClick={() => setVocabularyOpen(true)}>Saved vocabulary <span className="count-badge">{vocabulary.length}</span></button>
+                <span className="keyboard-note">Phonetic mode also maps common Latin letter keys while you type.</span>
+              </div>
 
-            {status ? <p className="status-message" role="status">{status}</p> : null}
-          </section>
+              {status ? <p className="status-message" role="status">{status}</p> : null}
+            </section>
+          </main>
 
-          <AITools text={preferences.text} dialect={preferences.dialect} orthography={preferences.orthography} onSaveWords={saveWords} onApplyText={(value) => updatePreferences({ text: value })} />
+          <PromoSidebar transliteration={transliteration} translation={translation} dialect={preferences.dialect} hasText={Boolean(preferences.text.trim())} translating={translating} onTranslate={() => void translateToEnglish()} />
+        </div>
 
-          <section className="tips-grid" aria-label="Keyboard tips and help">
-            <a className="tip-card" href="#keyboard-title"><span className="tip-icon">☼</span><span><strong>Tips for typing</strong><small>Use the phonetic layout if you’re not familiar with the key positions.</small></span><b>›</b></a>
-            <div className="tip-card"><span className="tip-icon">⌨</span><span><strong>Keyboard shortcuts</strong><small>Ctrl + A Select all · Ctrl + C Copy · Ctrl + V Paste</small></span></div>
-            <a className="tip-card" href="mailto:hello@tunapp.com"><span className="tip-icon">?</span><span><strong>Need help?</strong><small>Contact us via email.</small></span><b>›</b></a>
-          </section>
-        </main>
+        <AITools />
 
-        <PromoSidebar transliteration={transliteration} translation={translation} dialect={preferences.dialect} hasText={Boolean(preferences.text.trim())} translating={translating} onTranslate={() => void translateToEnglish()} />
+        <section className="tips-grid" aria-label="Keyboard tips and help">
+          <a className="tip-card" href="#keyboard-title"><span className="tip-icon">☼</span><span><strong>Tips for typing</strong><small>Use the phonetic layout if you’re not familiar with the key positions.</small></span><b>›</b></a>
+          <div className="tip-card"><span className="tip-icon">⌨</span><span><strong>Keyboard shortcuts</strong><small>Ctrl + A Select all · Ctrl + C Copy · Ctrl + V Paste</small></span></div>
+          <a className="tip-card" href="mailto:hello@tunapp.com"><span className="tip-icon">?</span><span><strong>Need help?</strong><small>Contact us via email.</small></span><b>›</b></a>
+        </section>
       </div>
 
       <VocabularyPanel open={vocabularyOpen} entries={vocabulary} onClose={() => setVocabularyOpen(false)} onRemove={removeVocabulary} onClear={clearVocabulary} />
