@@ -1,0 +1,6 @@
+[build]
+  base = "armenian-keyboard"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
