@@ -19,4 +19,8 @@ if (!/^\s*NPM_VERSION\s*=\s*"11\.6\.0"\s*$/m.test(baseConfig)) {
   throw new Error('Base-directory netlify.toml must pin NPM_VERSION = "11.6.0"');
 }
 
-console.log("Netlify root and base-directory configs both pin npm 11.6.0.");
+if (!/^\s*publish\s*=\s*"\.next"\s*$/m.test(baseConfig)) {
+  throw new Error('Base-directory netlify.toml must publish ".next"');
+}
+
+console.log("Netlify root/base configs pin npm 11.6.0 and base config publishes .next.");
