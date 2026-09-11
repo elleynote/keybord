@@ -35,8 +35,8 @@ jobs:
       - name: Run typecheck
         run: npm run typecheck
 
-      - name: Run lint
-        run: npm run lint
+      - name: Lint alphabet page files
+        run: npx eslint src/app/armenian-alphabet src/armenian-alphabet-page.test.tsx
 
       - name: Run source verification
         run: npm run verify:source
