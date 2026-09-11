@@ -9,10 +9,10 @@ interface ToolDefinition {
 }
 
 const tools: ToolDefinition[] = [
-  { icon: "✓", title: "Check my Armenian", description: "Get spelling and grammar suggestions.", cta: "Check text →", href: brand.links.translator },
-  { icon: "⇄", title: "Convert dialect", description: "Switch between Western and Eastern Armenian.", cta: "Convert →", href: brand.links.verbs },
-  { icon: "✦", title: "Ask Tun AI", description: "Explain, improve or create more with AI.", cta: "Ask a question →", href: brand.links.socialNetwork },
-  { icon: "♧", title: "Save to vocabulary", description: "Save words from your text to practise later.", cta: "Save words →", href: brand.links.getStarted },
+  { icon: "✓", title: "English to Armenian translation", description: "Get spelling and grammar suggestions.", cta: "Check text →", href: brand.links.translator },
+  { icon: "⇄", title: "Try Armenian verb tool", description: "Switch between Western and Eastern Armenian.", cta: "Convert →", href: brand.links.verbs },
+  { icon: "✦", title: "Join Armenian Social Network", description: "Explain, improve or create more with AI.", cta: "Ask a question →", href: brand.links.socialNetwork },
+  { icon: "♧", title: "Try 4 lessons for $1", description: "Save words from your text to practise later.", cta: "Save words →", href: brand.links.getStarted },
 ];
 
 export function AITools() {

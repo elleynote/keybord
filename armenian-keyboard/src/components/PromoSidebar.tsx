@@ -10,7 +10,7 @@ interface PromoSidebarProps {
   onTranslate?: () => void;
 }
 
-export function PromoSidebar({ transliteration = "", translation = "", dialect = "western", hasText = false, translating = false, onTranslate }: PromoSidebarProps) {
+export function PromoSidebar({ transliteration = "", translation = "", dialect = "western", hasText = false }: PromoSidebarProps) {
   return (
     <aside className="sidebar-column" aria-label="Results and Armenian learning resources">
       <section className="sidebar-card result-card">
@@ -21,11 +21,7 @@ export function PromoSidebar({ transliteration = "", translation = "", dialect =
             <strong>{translation || (hasText ? "Ready when you are" : "Type Armenian to translate")}</strong>
           </div>
         </div>
-        {onTranslate ? (
-          <button type="button" className="sidebar-translate-button" disabled={!hasText || translating} onClick={onTranslate}>
-            {translating ? "Translating…" : "Translate to English"}
-          </button>
-        ) : null}
+        <a className="sidebar-translate-button" href="https://translatearmenian.com/" target="_blank" rel="noopener noreferrer">Translate to English</a>
       </section>
 
       <section className="sidebar-card result-card">
