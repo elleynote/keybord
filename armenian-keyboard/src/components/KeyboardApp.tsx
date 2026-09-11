@@ -228,7 +228,7 @@ export function KeyboardApp() {
         <section className="tips-grid" aria-label="Keyboard tips and help">
           <a className="tip-card" href="#keyboard-title"><span className="tip-icon">☼</span><span><strong>Tips for typing</strong><small>Use the phonetic layout if you’re not familiar with the key positions.</small></span><b>›</b></a>
           <div className="tip-card"><span className="tip-icon">⌨</span><span><strong>Keyboard shortcuts</strong><small>Ctrl + A Select all · Ctrl + C Copy · Ctrl + V Paste</small></span></div>
-          <a className="tip-card" href="mailto:hello@tunapp.com"><span className="tip-icon">?</span><span><strong>Need help?</strong><small>Contact us via email.</small></span><b>›</b></a>
+          <a className="tip-card" href="mailto:hello@tunapp.com"><span className="tip-icon">?</span><span><strong>Contact us</strong><small>Contact us via email.</small></span><b>›</b></a>
         </section>
       </div>
 
