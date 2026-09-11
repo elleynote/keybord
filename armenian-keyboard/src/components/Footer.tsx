@@ -1,4 +1,5 @@
 import { brand } from "@/config/brand";
+import { FooterNewsletterForm } from "@/components/FooterNewsletterForm";
 
 const footerColumns = [
   {
@@ -72,12 +73,7 @@ export function Footer() {
                       <a href={brand.links.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer"><YouTubeIcon /></a>
                     </div>
                     <div className="footer-newsletter">
-                      <form action="https://tunapp.us5.list-manage.com/subscribe/post?u=cf919aa58fa15934e1e2a04a0&amp;id=3feeed30f4&amp;f_id=00a043edf0" method="post" target="_blank">
-                        <label className="sr-only" htmlFor="footer-email">Email address</label>
-                        <input id="footer-email" type="email" name="EMAIL" placeholder="Enter your email here" autoComplete="email" required />
-                        <div className="mailchimp-honeypot" aria-hidden="true"><input type="text" name="b_cf919aa58fa15934e1e2a04a0_3feeed30f4" tabIndex={-1} defaultValue="" /></div>
-                        <button type="submit" name="subscribe">Join the community</button>
-                      </form>
+                      <FooterNewsletterForm />
                     </div>
                   </>
                 ) : null}
