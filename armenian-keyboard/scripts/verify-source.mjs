@@ -8,6 +8,7 @@ const requiredFiles = [
   "src/components/KeyboardApp.tsx",
   "src/components/OnScreenKeyboard.tsx",
   "src/components/PromoSidebar.tsx",
+  "src/components/AITools.tsx",
   "src/components/Footer.tsx",
   "src/lib/keyboard-layouts.ts",
   "src/lib/transliteration.ts",
@@ -22,7 +23,7 @@ for (const file of requiredFiles) {
 }
 
 const allSource = requiredFiles.filter((file) => file.endsWith(".ts") || file.endsWith(".tsx")).map(read).join("\n");
-const promo = read("src/components/PromoSidebar.tsx");
+const promo = read("src/components/PromoSidebar.tsx") + "\n" + read("src/components/AITools.tsx");
 const footer = read("src/components/Footer.tsx");
 const header = read("src/components/Header.tsx");
 const pkg = JSON.parse(read("package.json"));
@@ -32,13 +33,16 @@ for (const dependency of ["@supabase/supabase-js", "firebase", "prisma", "stripe
 }
 for (const value of [
   "Tun Online Armenian School",
-  "Armenian Translation Tool",
-  "Armenian Verb Conjugations",
-  "Armenian Social Network",
-  "Learn Armenian Online",
+  "Check my Armenian",
+  "Convert dialect",
+  "Ask Tun AI",
+  "Save to vocabulary",
   "mailto:hello@tunapp.com",
 ]) {
   if (!promo.includes(value) && !read("src/config/brand.ts").includes(value)) throw new Error(`Missing promotional requirement: ${value}`);
+}
+for (const link of ["translator", "verbs", "socialNetwork", "getStarted"]) {
+  if (!promo.includes(`brand.links.${link}`)) throw new Error(`Missing smart-tool destination: ${link}`);
 }
 if (!header.includes("Try 4 Armenian lessons for $1 →") || !header.includes('width="105"')) throw new Error("Header branding contract is incomplete");
 if (!footer.includes("Enter your email here") || !footer.includes("Join the community")) throw new Error("Footer newsletter is incomplete");
