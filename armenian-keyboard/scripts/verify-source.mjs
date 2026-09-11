@@ -33,10 +33,11 @@ for (const dependency of ["@supabase/supabase-js", "firebase", "prisma", "stripe
 }
 for (const value of [
   "Tun Online Armenian School",
-  "Check my Armenian",
-  "Convert dialect",
-  "Ask Tun AI",
-  "Save to vocabulary",
+  "English to Armenian translation",
+  "Try Armenian verb tool",
+  "Join Armenian Social Network",
+  "Try 4 lessons for $1",
+  "https://translatearmenian.com/",
   "mailto:hello@tunapp.com",
 ]) {
   if (!promo.includes(value) && !read("src/config/brand.ts").includes(value)) throw new Error(`Missing promotional requirement: ${value}`);
