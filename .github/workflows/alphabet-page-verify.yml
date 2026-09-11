@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Pin npm
+        run: npm install --global npm@11.6.0
+
+      - name: Confirm npm
+        run: npm --version
+
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
