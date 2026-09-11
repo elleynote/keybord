@@ -6,7 +6,7 @@ const VOCABULARY_KEY = "tun-keyboard-vocabulary";
 export const defaultPreferences: Preferences = {
   dialect: "western",
   layout: "standard",
-  orthography: "reformed",
+  orthography: "traditional",
   text: "",
 };
 

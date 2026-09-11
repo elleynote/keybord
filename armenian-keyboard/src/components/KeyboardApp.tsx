@@ -7,8 +7,8 @@ import { PromoSidebar } from "@/components/PromoSidebar";
 import { SegmentedControl } from "@/components/SegmentedControl";
 import { VocabularyPanel } from "@/components/VocabularyPanel";
 import { applyEditorKey, countCharacters, countWords } from "@/lib/editor-text";
-import { PHONETIC_KEY_MAP } from "@/lib/keyboard-layouts";
 import { applyOrthographyPreference } from "@/lib/orthography";
+import { applyPhoneticEditorKey, type PhoneticSession } from "@/lib/phonetic-input";
 import { runAIAction } from "@/lib/client-ai";
 import { defaultPreferences, loadPreferences, loadVocabulary, savePreferences, saveVocabulary } from "@/lib/storage";
 import { transliterate } from "@/lib/transliteration";
@@ -29,6 +29,7 @@ const orthographyOptions = [
 
 export function KeyboardApp() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const phoneticSessionRef = useRef<PhoneticSession | null>(null);
   const [preferences, setPreferences] = useState<Preferences>(defaultPreferences);
   const [hydrated, setHydrated] = useState(false);
   const [shift, setShift] = useState(false);
@@ -52,12 +53,18 @@ export function KeyboardApp() {
   const characters = countCharacters(preferences.text);
   const words = countWords(preferences.text);
 
+  function resetPhoneticSession() {
+    phoneticSessionRef.current = null;
+  }
+
   function updatePreferences(patch: Partial<Preferences>) {
+    resetPhoneticSession();
     setPreferences((current) => ({ ...current, ...patch }));
     setTranslation("");
   }
 
   function insertKey(key: string) {
+    resetPhoneticSession();
     const textarea = textareaRef.current;
     const start = textarea?.selectionStart ?? preferences.text.length;
     const end = textarea?.selectionEnd ?? preferences.text.length;
@@ -73,12 +80,28 @@ export function KeyboardApp() {
 
   function handlePhysicalKey(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (preferences.layout !== "phonetic" || event.ctrlKey || event.metaKey || event.altKey) return;
-    const lower = event.key.toLowerCase();
-    const mapped = PHONETIC_KEY_MAP[lower];
-    if (!mapped) return;
+    const textarea = textareaRef.current;
+    const result = applyPhoneticEditorKey({
+      value: preferences.text,
+      selectionStart: textarea?.selectionStart ?? preferences.text.length,
+      selectionEnd: textarea?.selectionEnd ?? preferences.text.length,
+      key: event.key,
+      dialect: preferences.dialect,
+      orthography: preferences.orthography,
+      session: phoneticSessionRef.current,
+    });
+    if (!result) {
+      resetPhoneticSession();
+      return;
+    }
     event.preventDefault();
-    const value = event.shiftKey ? mapped.toLocaleUpperCase("hy-AM") : mapped;
-    insertKey(value);
+    phoneticSessionRef.current = result.session;
+    setPreferences((current) => ({ ...current, text: result.value }));
+    setTranslation("");
+    requestAnimationFrame(() => {
+      textareaRef.current?.focus();
+      textareaRef.current?.setSelectionRange(result.caret, result.caret);
+    });
   }
 
   async function copyText() {
@@ -95,6 +118,7 @@ export function KeyboardApp() {
     try {
       const pasted = await navigator.clipboard.readText();
       if (!pasted) return setStatus("Clipboard is empty.");
+      resetPhoneticSession();
       const textarea = textareaRef.current;
       const result = applyEditorKey(preferences.text, textarea?.selectionStart ?? preferences.text.length, textarea?.selectionEnd ?? preferences.text.length, pasted);
       updatePreferences({ text: applyOrthographyPreference(result.value, preferences.orthography) });
