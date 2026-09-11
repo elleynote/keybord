@@ -1,0 +1,294 @@
+.page {
+  background: #f7f7f8;
+  color: #202124;
+}
+
+.article {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 56px 0 72px;
+}
+
+.hero,
+.sectionCard {
+  background: #fff;
+  border: 1px solid #ececef;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(28, 28, 30, 0.05);
+}
+
+.hero {
+  padding: 42px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #e91d2d;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0 0 18px;
+  max-width: 900px;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.hero p,
+.sectionCard p,
+.sectionCard li {
+  color: #666;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.hero p {
+  max-width: 900px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 13px 20px;
+  border-radius: 10px;
+  background: #e91d2d;
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  background: #c91625;
+}
+
+.textLink {
+  color: #d71929;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.textLink:hover,
+.textLink:focus-visible {
+  text-decoration: underline;
+}
+
+.sectionCard {
+  padding: 34px 38px;
+  margin: 24px 0;
+}
+
+.sectionCard h2 {
+  margin: 0 0 16px;
+  font-size: clamp(27px, 3vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.sectionCard h3 {
+  margin: 26px 0 8px;
+  font-size: 21px;
+}
+
+.sectionCard p:first-of-type {
+  margin-top: 0;
+}
+
+.sectionCard p:last-child {
+  margin-bottom: 0;
+}
+
+.inlineLetters {
+  display: block;
+  margin: 16px 0;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #fafafa;
+  font-family: "Noto Sans Armenian", "Nunito", sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.exampleBox {
+  margin: 16px 0;
+  padding: 18px 20px;
+  border-left: 4px solid #e91d2d;
+  border-radius: 0 12px 12px 0;
+  background: #fff6f7;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.videoCard {
+  overflow: hidden;
+  border: 1px solid #ececef;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.videoCard h3 {
+  margin: 0;
+  padding: 16px 18px;
+  font-size: 17px;
+}
+
+.videoFrame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #111;
+}
+
+.videoFrame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.tableIntro {
+  margin-bottom: 18px;
+}
+
+.tableScroller {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e6e6e9;
+  border-radius: 14px;
+  background: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.alphabetTable {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.alphabetTable th,
+.alphabetTable td {
+  padding: 13px 12px;
+  border-right: 1px solid #ececef;
+  border-bottom: 1px solid #ececef;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.45;
+}
+
+.alphabetTable thead tr:first-child th {
+  background: #f5f5f7;
+  color: #202124;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.alphabetTable thead tr:nth-child(2) th {
+  background: #fafafa;
+  color: #d71929;
+  font-weight: 800;
+}
+
+.alphabetTable tbody tr:nth-child(even) {
+  background: #fcfcfd;
+}
+
+.alphabetTable tbody tr:hover {
+  background: #fff7f8;
+}
+
+.alphabetTable th:last-child,
+.alphabetTable td:last-child {
+  border-right: 0;
+}
+
+.alphabetTable tbody tr:last-child th,
+.alphabetTable tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.formsCell {
+  color: #111;
+  font-family: "Noto Sans Armenian", "Nunito", sans-serif;
+  font-size: 19px;
+  white-space: nowrap;
+}
+
+.sourceNote {
+  margin-top: 12px;
+  color: #8a8a8f;
+  font-size: 13px !important;
+}
+
+.twoColumnList {
+  columns: 2;
+  column-gap: 40px;
+  padding-left: 24px;
+}
+
+.faq {
+  display: grid;
+  gap: 16px;
+}
+
+.faqItem {
+  padding: 18px 20px;
+  border: 1px solid #ececef;
+  border-radius: 14px;
+  background: #fcfcfd;
+}
+
+.faqItem h3 {
+  margin: 0 0 8px;
+}
+
+.faqItem p {
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .article {
+    width: min(100% - 22px, 1180px);
+    padding-top: 28px;
+  }
+
+  .hero,
+  .sectionCard {
+    border-radius: 16px;
+  }
+
+  .hero {
+    padding: 28px 22px;
+  }
+
+  .sectionCard {
+    padding: 26px 22px;
+  }
+
+  .hero p,
+  .sectionCard p,
+  .sectionCard li {
+    font-size: 16px;
+  }
+
+  .videoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .twoColumnList {
+    columns: 1;
+  }
+}
