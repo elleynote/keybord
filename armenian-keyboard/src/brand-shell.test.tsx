@@ -1,0 +1,27 @@
+import { readFileSync } from "node:fs";
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it } from "vitest";
+import { Footer } from "@/components/Footer";
+
+const headerSource = readFileSync(new URL("./components/Header.tsx", import.meta.url), "utf8");
+
+describe("Tun shell", () => {
+  it("uses the Tun promo strip and 105px logo treatment", () => {
+    expect(headerSource).toContain("Try 4 Armenian lessons for $1 →");
+    expect(headerSource).toContain('width="105"');
+    expect(headerSource).toContain('height="56"');
+  });
+
+  it("contains the Tun ecosystem footer and Mailchimp signup", () => {
+    const html = renderToStaticMarkup(<Footer />);
+    expect(html).toContain("Learn Armenian Online");
+    expect(html).toContain("Armenian Translation Tool");
+    expect(html).toContain("Armenian Verb Conjugations");
+    expect(html).toContain("Armenian Social Network");
+    expect(html).toContain("hello@tunapp.com");
+    expect(html).toContain("Enter your email here");
+    expect(html).toContain("Join the community");
+    expect(html).toContain("b_cf919aa58fa15934e1e2a04a0_3feeed30f4");
+    expect(html).toContain("Copyright © 2026, Tun Online Armenian School. All rights reserved. For every Armenian who loves their home.");
+  });
+});
