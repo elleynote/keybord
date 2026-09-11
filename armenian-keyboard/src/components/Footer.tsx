@@ -4,7 +4,6 @@ const footerColumns = [
   {
     heading: "Learn",
     links: [
-      ["My Lessons", brand.links.lessons],
       ["Learn Armenian Online", brand.links.getStarted],
       ["Courses, Flashcards and Workbooks", brand.links.shop],
       ["Armenian Social Network", brand.links.socialNetwork],
