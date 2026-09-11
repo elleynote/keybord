@@ -10,13 +10,6 @@ interface PromoSidebarProps {
   onTranslate?: () => void;
 }
 
-const resources = [
-  { title: "Armenian Translation Tool", copy: "Translate English to Armenian instantly.", href: brand.links.translator, cta: "Open Translator →" },
-  { title: "Armenian Verb Conjugations", copy: "Learn the correct Armenian verb tenses.", href: brand.links.verbs, cta: "Conjugate a Verb →" },
-  { title: "Armenian Social Network", copy: "Practice speaking with Armenians online.", href: brand.links.socialNetwork, cta: "Start Practising →" },
-  { title: "Learn Armenian Online", copy: "Join thousands learning Eastern and Western Armenian online.", href: brand.links.getStarted, cta: "Start Learning →" },
-] as const;
-
 export function PromoSidebar({ transliteration = "", translation = "", dialect = "western", hasText = false, translating = false, onTranslate }: PromoSidebarProps) {
   return (
     <aside className="sidebar-column" aria-label="Results and Armenian learning resources">
@@ -62,30 +55,6 @@ export function PromoSidebar({ transliteration = "", translation = "", dialect =
         <h2>Learn Armenian with Tun</h2>
         <p>Join thousands learning Eastern and Western Armenian online.</p>
         <a className="primary-link" href={brand.links.getStarted} target="_blank" rel="noopener noreferrer">Try 4 lessons for $1 →</a>
-      </section>
-
-      <section className="sidebar-card tools-card">
-        <p className="eyebrow">More Armenian tools</p>
-        <div className="resource-list">
-          {resources.map((resource) => (
-            <a className="resource-link" href={resource.href} target="_blank" rel="noopener noreferrer" key={resource.title}>
-              <img src={brand.faviconUrl} alt="" aria-hidden="true" />
-              <span>
-                <strong>{resource.title}</strong>
-                <small>{resource.copy}</small>
-                <em>{resource.cta}</em>
-              </span>
-            </a>
-          ))}
-          <a className="resource-link" href={brand.links.contact}>
-            <span className="help-icon" aria-hidden="true">?</span>
-            <span>
-              <strong>Need help?</strong>
-              <small>Contact us via email.</small>
-              <em>Contact Us →</em>
-            </span>
-          </a>
-        </div>
       </section>
     </aside>
   );
