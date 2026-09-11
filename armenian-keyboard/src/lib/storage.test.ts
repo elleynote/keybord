@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { loadPreferences, loadVocabulary, savePreferences, saveVocabulary } from "./storage";
+import { defaultPreferences, loadPreferences, loadVocabulary, savePreferences, saveVocabulary } from "./storage";
 
 class MemoryStorage implements Storage {
   private values = new Map<string, string>();
@@ -12,6 +12,10 @@ class MemoryStorage implements Storage {
 }
 
 describe("storage", () => {
+  it("defaults Western Armenian to traditional orthography", () => {
+    expect(defaultPreferences).toMatchObject({ dialect: "western", orthography: "traditional" });
+  });
+
   it("round-trips preferences", () => {
     const storage = new MemoryStorage();
     savePreferences({ dialect: "eastern", layout: "phonetic", orthography: "traditional", text: "Բարեւ" }, storage);
