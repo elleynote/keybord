@@ -1,21 +1,32 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { AITools } from "@/components/AITools";
 import { PromoSidebar } from "@/components/PromoSidebar";
 
 describe("client requested Tun promotions", () => {
-  it("contains all six requested destinations", () => {
+  it("keeps the school promo in the sidebar without the duplicate tools/help block", () => {
     const html = renderToStaticMarkup(<PromoSidebar />);
+    expect(html).toContain("Tun Online Armenian School");
+    expect(html).toContain("https://tunapp.com/get-started");
+    expect(html).not.toContain("More Armenian tools");
+    expect(html).not.toContain("Need help?");
+  });
+
+  it("maps the four smart-tool CTAs to the client-requested destinations", () => {
+    const html = renderToStaticMarkup(<AITools />);
     for (const value of [
-      "Tun Online Armenian School",
-      "https://tunapp.com/get-started",
-      "Armenian Translation Tool",
+      "Check my Armenian",
+      "Check text →",
       "https://translatearmenian.com",
-      "Armenian Verb Conjugations",
+      "Convert dialect",
+      "Convert →",
       "https://armenianverbs.com",
-      "Armenian Social Network",
+      "Ask Tun AI",
+      "Ask a question →",
       "https://armeniansocialnetwork.com",
-      "Learn Armenian Online",
-      "mailto:hello@tunapp.com",
+      "Save to vocabulary",
+      "Save words →",
+      "https://tunapp.com/get-started/",
     ]) expect(html).toContain(value);
   });
 });
