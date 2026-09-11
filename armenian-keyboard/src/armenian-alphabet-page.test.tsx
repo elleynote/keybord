@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import ArmenianAlphabetPage, { metadata } from "@/app/armenian-alphabet/page";
 import { armenianAlphabetRows } from "@/app/armenian-alphabet/alphabet-data";
+import sitemap from "@/app/sitemap";
 
 const pageSource = readFileSync(new URL("./app/armenian-alphabet/page.tsx", import.meta.url), "utf8");
 const tableSource = readFileSync(new URL("./app/armenian-alphabet/ArmenianAlphabetTable.tsx", import.meta.url), "utf8");
@@ -46,5 +47,11 @@ describe("Armenian alphabet page", () => {
 
     expect(tableSource).not.toContain("Name pronunciation");
     expect(tableSource).not.toContain("Numerical value");
+  });
+
+  it("publishes both the keyboard homepage and Armenian alphabet page in the sitemap", () => {
+    const urls = sitemap().map((entry) => entry.url);
+    expect(urls).toContain("https://armeniankeyboard.com/");
+    expect(urls).toContain("https://armeniankeyboard.com/armenian-alphabet");
   });
 });
