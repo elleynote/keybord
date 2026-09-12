@@ -18,10 +18,13 @@ describe("Tun shell", () => {
     expect(html).toContain("Armenian Translation Tool");
     expect(html).toContain("Armenian Verb Conjugations");
     expect(html).toContain("Armenian Social Network");
+    expect(html).toContain("https://tunapp.com/armenian-quizzes");
     expect(html).toContain("hello@tunapp.com");
     expect(html).toContain("Enter your email here");
     expect(html).toContain("Join the community");
     expect(html).toContain("b_cf919aa58fa15934e1e2a04a0_3feeed30f4");
     expect(html).toContain("Copyright © 2026, Tun Online Armenian School. All rights reserved. For every Armenian who loves their home.");
+    expect(html.indexOf("Blog")).toBeLessThan(html.indexOf("Quizzes"));
+    expect(html.indexOf("Quizzes")).toBeLessThan(html.indexOf("Contact Us"));
   });
 });
