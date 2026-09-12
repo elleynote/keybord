@@ -31,6 +31,7 @@ const footerColumns = [
       ["Website Terms", brand.links.terms],
       ["Affiliate Program", brand.links.affiliate],
       ["Blog", brand.links.blog],
+      ["Quizzes", brand.links.quizzes],
       ["Contact Us", brand.links.contact],
     ],
   },
