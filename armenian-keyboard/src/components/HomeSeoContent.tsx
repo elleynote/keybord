@@ -28,7 +28,7 @@ export function HomeSeoContent() {
       <section className="homepage-article-block">
         <p className="eyebrow">About the Armenian Alphabet</p>
         <h2>The Armenian Alphabet</h2>
-        <p>The <strong>Armenian alphabet</strong> is a unique writing system created around 405 AD by Armenian scholar Mesrop Mashtots. It was developed specifically for the Armenian language and has been used to write Armenian for more than 1,600 years.</p>
+        <p>The <a className="article-link-inline" href="/armenian-alphabet/" target="_blank" rel="noopener noreferrer"><strong>Armenian alphabet</strong></a> is a unique writing system created around 405 AD by Armenian scholar Mesrop Mashtots. It was developed specifically for the Armenian language and has been used to write Armenian for more than 1,600 years.</p>
         <p>The modern <strong>Armenian written alphabet</strong> contains 39 letters:</p>
         <p className="armenian-text alphabet-line">Ա Բ Գ Դ Ե Զ Է Ը Թ Ժ Ի Լ Խ Ծ Կ Հ Ձ Ղ Ճ Մ Յ Ն Շ Ո Չ Պ Ջ Ռ Ս Վ Տ Ր Ց Ւ Փ Ք ԵՎ Օ Ֆ</p>
         <p className="armenian-text alphabet-line">ա բ գ դ ե զ է ը թ ժ ի լ խ ծ կ հ ձ ղ ճ մ յ ն շ ո չ պ ջ ռ ս վ տ ր ց ւ փ ք և օ ֆ</p>
