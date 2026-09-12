@@ -12,6 +12,7 @@ describe("homepage SEO content", () => {
     expect(html).toContain("Armenian Keyboard &amp; Alphabet FAQs");
     expect(html).toContain("barev → բարև");
     expect(html).toContain("href=\"/armenian-alphabet/\"");
+    expect(html).toContain("href=\"/armenian-alphabet/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Armenian alphabet</strong>");
 
     expect(html.indexOf("How to Type Armenian Online")).toBeLessThan(html.indexOf("footer-artwork-wrap"));
   });
