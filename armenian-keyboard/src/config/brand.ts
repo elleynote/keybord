@@ -35,6 +35,7 @@ export const brand = {
     terms: "https://tunapp.com/website-terms/",
     affiliate: "https://tunapp.com/ambassadors/",
     blog: "https://tunapp.com/blog",
+    quizzes: "https://tunapp.com/armenian-quizzes",
     contact: "mailto:hello@tunapp.com",
     instagram: "https://instagram.com/tun.armenian",
     tiktok: "https://www.tiktok.com/@tun.armenian",
