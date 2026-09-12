@@ -399,6 +399,97 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .tip-card b { color: var(--muted); font-size: 22px; }
 .tip-icon { width: 36px; height: 36px; font-size: 16px; }
 
+.homepage-article {
+  width: min(1120px, calc(100% - 40px));
+  margin: 8px auto 0;
+  padding: 10px 0 8px;
+}
+.homepage-article-block {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+}
+.homepage-article-block h2 {
+  max-width: 880px;
+  margin: 0 0 14px;
+  font-size: clamp(27px, 3vw, 38px);
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+.homepage-article-block h3 {
+  margin: 22px 0 8px;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+.homepage-article-block p {
+  max-width: 940px;
+  margin: 0 0 13px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.homepage-article-block code {
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: #f0eded;
+  color: var(--ink);
+  font-size: .92em;
+}
+.example-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.example-line strong {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid #f0c1c6;
+  border-radius: 10px;
+  background: #fff8f9;
+  color: var(--ink);
+  font-size: 14px;
+}
+.alphabet-line {
+  max-width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.article-link {
+  display: inline-flex;
+  margin-top: 2px;
+  color: var(--primary);
+  font-weight: 800;
+  text-decoration: none;
+}
+.article-link:hover { text-decoration: underline; }
+.article-link-inline {
+  color: var(--primary);
+  text-decoration: none;
+}
+.article-link-inline:hover { text-decoration: underline; }
+.homepage-faq-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+.homepage-faq-list > div {
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.homepage-faq-list > div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.homepage-faq-list h3 { margin-top: 0; }
+
 .sidebar-column { display: grid; gap: 14px; min-width: 0; }
 .sidebar-card { border-radius: var(--radius-md); padding: 17px; }
 .result-card-heading { display: flex; align-items: flex-start; gap: 10px; }
@@ -548,6 +639,11 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   .tips-grid > :last-child, .tools-card { grid-column: auto; }
   .feature-card { min-height: auto; }
   .feature-card p { min-height: 0; }
+  .homepage-article { width: min(100% - 24px, 620px); }
+  .homepage-article-block { padding: 24px 0; }
+  .homepage-article-block h2 { font-size: 27px; }
+  .homepage-article-block p { font-size: 15px; }
+  .alphabet-line { font-size: 16px; }
   .footer-artwork-wrap { min-height: 240px; }
   .footer-artwork { width: 155vw; right: -8%; }
   .footer-content { width: min(100% - 36px, 420px); padding: 34px 0 20px; }
