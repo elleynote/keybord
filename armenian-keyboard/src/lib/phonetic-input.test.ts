@@ -59,6 +59,12 @@ describe("phonetic Armenian input", () => {
     expect(typeKeys(["t", "s", "h"]).value).toBe("ց");
   });
 
+  it("maps standalone y to schwa after applying contextual y sequences first", () => {
+    expect(typeKeys(["y"]).value).toBe("ը");
+    expect(typeKeys(["y", "e"]).value).toBe("ե");
+    expect(typeKeys(["y", "e", "v"]).value).toBe("և");
+  });
+
   it("handles ev and yev according to selected orthography", () => {
     expect(typeKeys(["e", "v"], "eastern", "reformed").value).toBe("և");
     expect(typeKeys(["y", "e", "v"], "eastern", "reformed").value).toBe("և");
@@ -103,6 +109,21 @@ describe("phonetic Armenian input", () => {
     });
 
     expect(result.value).toBe("ս");
+    expect(result.caret).toBe(1);
+  });
+
+  it("recovers a previous provisional letter if the active browser session is lost", () => {
+    const result = applySupportedKey({
+      value: "ս",
+      selectionStart: 1,
+      selectionEnd: 1,
+      key: "h",
+      dialect: "eastern",
+      orthography: "reformed",
+      session: null,
+    });
+
+    expect(result.value).toBe("շ");
     expect(result.caret).toBe(1);
   });
 

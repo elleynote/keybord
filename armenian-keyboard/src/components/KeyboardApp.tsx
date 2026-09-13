@@ -26,6 +26,19 @@ const orthographyOptions = [
   { value: "reformed", label: "Reformed" },
   { value: "traditional", label: "Traditional" },
 ] as const;
+const phoneticHelpItems = [
+  "a -> ա",
+  "barev -> բարև",
+  "sh -> շ",
+  "ts -> ց",
+  "x / kh -> խ",
+  "gh -> ղ",
+  "rr -> ռ",
+  "oo / ou -> ու",
+  "ye -> ե",
+  "vo -> ո at the start of a word",
+  "s'h -> սհ",
+] as const;
 
 export function KeyboardApp() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -40,9 +53,16 @@ export function KeyboardApp() {
   const [vocabularyOpen, setVocabularyOpen] = useState(false);
 
   useEffect(() => {
-    setPreferences(loadPreferences());
-    setVocabulary(loadVocabulary());
-    setHydrated(true);
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (cancelled) return;
+      setPreferences(loadPreferences());
+      setVocabulary(loadVocabulary());
+      setHydrated(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -208,6 +228,21 @@ export function KeyboardApp() {
                   </div>
                 </div>
               </div>
+
+              {preferences.layout === "phonetic" ? (
+                <div className="phonetic-helper-panel">
+                  <div>
+                    <h2>Type Armenian phonetically</h2>
+                    <p className="phonetic-example-line">sh → շ · ts → ց · x/kh → խ · gh → ղ · ye → ե</p>
+                  </div>
+                  <details className="phonetic-help-details">
+                    <summary>Typing help</summary>
+                    <div className="phonetic-help-grid">
+                      {phoneticHelpItems.map((item) => <span key={item}>{item}</span>)}
+                    </div>
+                  </details>
+                </div>
+              ) : null}
 
               <OnScreenKeyboard dialect={preferences.dialect} layout={preferences.layout} orthography={preferences.orthography} shift={shift} onToggleShift={() => setShift((value) => !value)} onKeyPress={insertKey} />
 

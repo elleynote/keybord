@@ -21,16 +21,22 @@ export function OnScreenKeyboard({ dialect, layout, orthography, shift, onToggle
           {row.map((key, keyIndex) => {
             const action = key.action;
             const label = key.label ?? key.value;
+            const helperLabel = key.helper ? ` (${key.helper})` : "";
             return (
               <button
-                className={`keyboard-key${key.wide ? " keyboard-key--wide" : ""}${action === "space" ? " keyboard-key--space" : ""}${action === "shift" && shift ? " is-active" : ""}`}
+                className={`keyboard-key${key.helper ? " keyboard-key--with-helper" : ""}${key.wide ? " keyboard-key--wide" : ""}${action === "space" ? " keyboard-key--space" : ""}${action === "shift" && shift ? " is-active" : ""}`}
                 type="button"
                 key={`${key.value}-${keyIndex}`}
-                aria-label={action ? `${label} key` : `Insert ${label}`}
+                aria-label={action ? `${label} key` : `Insert ${label}${helperLabel}`}
                 onMouseDown={(event: MouseEvent<HTMLButtonElement>) => event.preventDefault()}
                 onClick={() => action === "shift" ? onToggleShift() : onKeyPress(key.value)}
               >
-                {label}
+                {key.helper ? (
+                  <>
+                    <span className="keyboard-key-primary">{label}</span>
+                    <span className="keyboard-key-helper">{key.helper}</span>
+                  </>
+                ) : label}
               </button>
             );
           })}

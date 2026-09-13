@@ -293,6 +293,86 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, input:focus-visib
 .keyboard-key--wide { flex: 1.6 1 0; font-family: "Nunito", sans-serif; font-size: 14px; }
 .keyboard-key--space { flex: 6 1 0; }
 .keyboard-key.is-active { background: var(--soft-accent); border-color: #ef9da6; color: var(--primary); }
+.keyboard-key--with-helper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.keyboard-key-primary {
+  font-family: "Noto Sans Armenian", "Nunito", sans-serif;
+  font-size: 19px;
+  line-height: 1;
+}
+.keyboard-key-helper {
+  font-family: "Nunito", sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--soft-text);
+}
+.phonetic-helper-panel {
+  margin: 16px 30px 0;
+  padding: 13px 14px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fffafa;
+}
+.phonetic-helper-panel h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+.phonetic-example-line {
+  margin: 0;
+  color: var(--soft-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+.phonetic-help-details {
+  position: relative;
+  justify-self: end;
+}
+.phonetic-help-details summary {
+  min-height: 36px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  list-style: none;
+}
+.phonetic-help-details summary::-webkit-details-marker { display: none; }
+.phonetic-help-grid {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 3;
+  width: min(360px, 78vw);
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 16px 36px rgba(33, 23, 23, .12);
+}
+.phonetic-help-grid span {
+  padding: 7px 8px;
+  border-radius: 8px;
+  background: #f7f7f8;
+  color: #3a3232;
+  font-size: 12px;
+  font-weight: 800;
+}
 .quick-actions-row {
   display: flex;
   align-items: center;
@@ -632,6 +712,9 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   .editor-toolbar { align-items: flex-start; flex-direction: column; padding: 10px 12px; }
   .editor-actions { width: 100%; justify-content: flex-start; }
   .editor-counts { width: 100%; justify-content: space-between; gap: 10px; }
+  .phonetic-helper-panel { margin: 14px 18px 0; grid-template-columns: 1fr; align-items: start; }
+  .phonetic-help-details { justify-self: start; }
+  .phonetic-help-grid { left: 0; right: auto; }
   .armenian-keyboard { margin: 14px 18px 0; padding: 10px; }
   .quick-actions-row { padding: 14px 18px 22px; align-items: flex-start; flex-direction: column; }
   .status-message { margin: -6px 18px 20px; }
@@ -665,6 +748,10 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   .armenian-keyboard { margin-inline: 10px; }
   .keyboard-row { min-width: 0; gap: 4px; }
   .keyboard-key { min-width: 0; min-height: 44px; padding-inline: 3px; font-size: 16px; }
+  .keyboard-key-primary { font-size: 16px; }
+  .keyboard-key-helper { font-size: 9px; }
+  .phonetic-helper-panel { margin-inline: 10px; padding: 12px; }
+  .phonetic-help-grid { width: min(320px, 84vw); grid-template-columns: 1fr; }
   .keyboard-note { line-height: 1.45; }
   .feature-card { padding: 15px; }
   .tip-card { padding: 13px; }
