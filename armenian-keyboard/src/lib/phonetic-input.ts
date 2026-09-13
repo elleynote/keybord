@@ -86,7 +86,7 @@ const easternLetters: Record<string, string> = {
   v: "վ",
   w: "ւ",
   x: "խ",
-  y: "յ",
+  y: "ը",
   z: "զ",
 };
 

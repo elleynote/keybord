@@ -3,6 +3,7 @@ import type { Dialect, KeyboardLayout, Orthography } from "@/types/keyboard";
 export interface KeyboardKey {
   value: string;
   label?: string;
+  helper?: string;
   wide?: boolean;
   action?: "backspace" | "shift" | "space" | "enter";
 }
@@ -26,6 +27,46 @@ const phoneticRows = [
   ["է", "թ", "ռ", "փ", "օ"],
 ];
 
+const phoneticHelpers: Record<string, string> = {
+  ա: "A",
+  բ: "B",
+  գ: "G",
+  դ: "D",
+  ե: "E",
+  զ: "Z",
+  է: "Ee",
+  ը: "Y",
+  թ: "Th",
+  ժ: "Zh",
+  ի: "I",
+  լ: "L",
+  խ: "X",
+  ծ: "C",
+  կ: "K",
+  հ: "H",
+  ձ: "Dz",
+  ղ: "Gh",
+  ճ: "Ch",
+  մ: "M",
+  ն: "N",
+  շ: "Sh",
+  ո: "O",
+  չ: "Chh",
+  պ: "P",
+  ջ: "J",
+  ռ: "Rr",
+  ս: "S",
+  վ: "V",
+  տ: "T",
+  ր: "R",
+  ց: "Ts",
+  ւ: "W",
+  փ: "Ph",
+  ք: "Q",
+  օ: "Oo",
+  ֆ: "F",
+};
+
 const punctuation: KeyboardKey[] = [
   { value: "՝", label: "՝" },
   { value: "․", label: "․" },
@@ -36,7 +77,7 @@ const punctuation: KeyboardKey[] = [
 ];
 
 export const PHONETIC_KEY_MAP: Record<string, string> = {
-  a: "ա", b: "բ", g: "գ", d: "դ", e: "ե", z: "զ", t: "տ", y: "յ", i: "ի", l: "լ",
+  a: "ա", b: "բ", g: "գ", d: "դ", e: "ե", z: "զ", t: "տ", y: "ը", i: "ի", l: "լ",
   x: "խ", c: "ծ", k: "կ", h: "հ", j: "ջ", m: "մ", n: "ն", s: "ս", o: "ո", p: "պ",
   r: "ր", v: "վ", f: "ֆ", q: "ք", w: "ւ",
 };
@@ -48,8 +89,9 @@ export function getKeyboardRows(
   shift: boolean,
 ): KeyboardKey[][] {
   const sourceRows = layout === "phonetic" ? phoneticRows : standardRows;
-  const mapped = sourceRows.map((row) => row.map((value) => ({
+  const mapped: KeyboardKey[][] = sourceRows.map((row) => row.map((value) => ({
     value: shift ? value.toLocaleUpperCase("hy-AM") : value,
+    helper: layout === "phonetic" ? phoneticHelpers[value] : undefined,
   })));
 
   if (orthography === "reformed") {

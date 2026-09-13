@@ -12,14 +12,21 @@ class MemoryStorage implements Storage {
 }
 
 describe("storage", () => {
-  it("defaults Western Armenian to traditional orthography", () => {
-    expect(defaultPreferences).toMatchObject({ dialect: "western", orthography: "traditional" });
+  it("defaults to Western traditional phonetic typing", () => {
+    expect(defaultPreferences).toMatchObject({ dialect: "western", layout: "phonetic", orthography: "traditional" });
+  });
+
+  it("migrates old saved default layouts to phonetic typing", () => {
+    const storage = new MemoryStorage();
+    storage.setItem("tun-keyboard-preferences", JSON.stringify({ dialect: "western", layout: "standard", orthography: "traditional", text: "" }));
+
+    expect(loadPreferences(storage)).toEqual({ dialect: "western", layout: "phonetic", orthography: "traditional", text: "" });
   });
 
   it("round-trips preferences", () => {
     const storage = new MemoryStorage();
-    savePreferences({ dialect: "eastern", layout: "phonetic", orthography: "traditional", text: "Բարեւ" }, storage);
-    expect(loadPreferences(storage)).toEqual({ dialect: "eastern", layout: "phonetic", orthography: "traditional", text: "Բարեւ" });
+    savePreferences({ dialect: "eastern", layout: "standard", orthography: "traditional", text: "Բարեւ" }, storage);
+    expect(loadPreferences(storage)).toEqual({ dialect: "eastern", layout: "standard", orthography: "traditional", text: "Բարեւ" });
   });
   it("round-trips vocabulary", () => {
     const storage = new MemoryStorage();
