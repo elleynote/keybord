@@ -31,6 +31,7 @@ const footerColumns = [
       ["Privacy Policy", brand.links.privacy],
       ["Website Terms", brand.links.terms],
       ["Affiliate Program", brand.links.affiliate],
+      ["Request a Feature", "https://tunapp.com/feature-request"],
       ["Blog", brand.links.blog],
       ["Quizzes", brand.links.quizzes],
       ["Contact Us", brand.links.contact],
