@@ -59,17 +59,22 @@ describe("phonetic Armenian input", () => {
     expect(typeKeys(["t", "s", "h"]).value).toBe("ց");
   });
 
-  it("maps standalone y to schwa after applying contextual y sequences first", () => {
-    expect(typeKeys(["y"]).value).toBe("ը");
+  it("maps standalone y to յ while keeping contextual y sequences first", () => {
+    expect(typeKeys(["y"]).value).toBe("յ");
     expect(typeKeys(["y", "e"]).value).toBe("ե");
     expect(typeKeys(["y", "e", "v"]).value).toBe("և");
   });
 
-  it("handles ev and yev according to selected orthography", () => {
+  it("handles ev and yev as the Armenian ligature in both dialects", () => {
     expect(typeKeys(["e", "v"], "eastern", "reformed").value).toBe("և");
     expect(typeKeys(["y", "e", "v"], "eastern", "reformed").value).toBe("և");
-    expect(typeKeys(["e", "v"], "western", "traditional").value).toBe("եւ");
-    expect(typeKeys(["y", "e", "v"], "western", "traditional").value).toBe("եւ");
+    expect(typeKeys(["e", "v"], "western", "traditional").value).toBe("և");
+    expect(typeKeys(["y", "e", "v"], "western", "traditional").value).toBe("և");
+  });
+
+  it("maps ch to չ from physical keyboard typing", () => {
+    expect(typeKeys(["c", "h"], "eastern", "reformed").value).toBe("չ");
+    expect(typeKeys(["c", "h"], "western", "traditional").value).toBe("չ");
   });
 
   it("applies word-initial ye and vo rules", () => {

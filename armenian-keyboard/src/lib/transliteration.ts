@@ -24,11 +24,15 @@ function transliterateWord(word: string, dialect: Dialect, sentenceStart: boolea
   const table = dialect === "western" ? western : eastern;
   const chars = [...lower];
   let result = "";
-  chars.forEach((char, index) => {
-    if (char === "ե") result += index === 0 ? "ye" : "e";
+  for (let index = 0; index < chars.length; index += 1) {
+    const char = chars[index];
+    if (char === "ո" && chars[index + 1] === "ւ") {
+      result += "u";
+      index += 1;
+    } else if (char === "ե") result += index === 0 ? "ye" : "e";
     else if (char === "ո") result += index === 0 ? "vo" : "o";
     else result += table[char] ?? char;
-  });
+  }
   return preserveCase(word, result);
 }
 
