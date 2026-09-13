@@ -136,6 +136,10 @@ function resolveMapping(mapping: Mapping, dialect: Dialect, orthography: Orthogr
   return value;
 }
 
+function getLetterTable(dialect: Dialect): Record<string, string> {
+  return dialect === "western" ? westernLetters : easternLetters;
+}
+
 function transliterateLowerLatin(latin: string, dialect: Dialect, orthography: Orthography): string {
   const lower = latin.toLowerCase();
   let result = "";
@@ -205,6 +209,35 @@ function applySession(value: string, session: PhoneticSession, latin: string, di
   };
 }
 
+function findRecoverableSession(value: string, start: number, end: number, key: string, dialect: Dialect, orthography: Orthography): PhoneticSession | null {
+  if (start !== end || !isLatinLetter(key)) return null;
+
+  const candidates = Object.keys(getLetterTable(dialect))
+    .map((latin) => [latin, latin.toUpperCase()])
+    .flat()
+    .map((latin) => ({ latin, output: transliterateLatinWord(latin, dialect, orthography) }))
+    .sort((a, b) => b.output.length - a.output.length);
+
+  for (const candidate of candidates) {
+    const sessionStart = start - candidate.output.length;
+    if (sessionStart < 0 || value.slice(sessionStart, start) !== candidate.output) continue;
+
+    const nextLatin = candidate.latin + key;
+    const combinedOutput = transliterateLatinWord(nextLatin, dialect, orthography);
+    const separateOutput = candidate.output + transliterateLatinWord(key, dialect, orthography);
+    if (combinedOutput === separateOutput) continue;
+
+    return {
+      start: sessionStart,
+      end: start,
+      latin: candidate.latin,
+      output: candidate.output,
+    };
+  }
+
+  return null;
+}
+
 export function applyPhoneticEditorKey(input: ApplyPhoneticEditorKeyInput): PhoneticEditorResult | null {
   const { value, selectionStart, selectionEnd, key, dialect, orthography, session } = input;
   const start = Math.max(0, Math.min(selectionStart, value.length));
@@ -225,7 +258,7 @@ export function applyPhoneticEditorKey(input: ApplyPhoneticEditorKeyInput): Phon
 
   const activeSession = start === end && isSessionCurrent(session, value, start)
     ? session
-    : { start, end, latin: "", output: "" };
+    : findRecoverableSession(value, start, end, key, dialect, orthography) ?? { start, end, latin: "", output: "" };
   const nextLatin = activeSession.latin + key;
 
   return applySession(value, activeSession, nextLatin, dialect, orthography);
