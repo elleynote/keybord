@@ -112,6 +112,21 @@ describe("phonetic Armenian input", () => {
     expect(result.caret).toBe(1);
   });
 
+  it("recovers a previous provisional letter if the active browser session is lost", () => {
+    const result = applySupportedKey({
+      value: "ս",
+      selectionStart: 1,
+      selectionEnd: 1,
+      key: "h",
+      dialect: "eastern",
+      orthography: "reformed",
+      session: null,
+    });
+
+    expect(result.value).toBe("շ");
+    expect(result.caret).toBe(1);
+  });
+
   it("supports cursor insertion without corrupting surrounding text", () => {
     let session: PhoneticSession | null = null;
     let result = applySupportedKey({ value: "աբ", selectionStart: 1, selectionEnd: 1, key: "s", dialect: "eastern", orthography: "reformed", session });
