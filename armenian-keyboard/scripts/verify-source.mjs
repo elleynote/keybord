@@ -25,6 +25,7 @@ for (const file of requiredFiles) {
 const allSource = requiredFiles.filter((file) => file.endsWith(".ts") || file.endsWith(".tsx")).map(read).join("\n");
 const promo = read("src/components/PromoSidebar.tsx") + "\n" + read("src/components/AITools.tsx");
 const footer = read("src/components/Footer.tsx");
+const newsletter = read("src/components/FooterNewsletterForm.tsx");
 const header = read("src/components/Header.tsx");
 const pkg = JSON.parse(read("package.json"));
 
@@ -46,7 +47,7 @@ for (const link of ["translator", "verbs", "socialNetwork", "getStarted"]) {
   if (!promo.includes(`brand.links.${link}`)) throw new Error(`Missing smart-tool destination: ${link}`);
 }
 if (!header.includes("Try 4 Armenian lessons for $1 →") || !header.includes('width="105"')) throw new Error("Header branding contract is incomplete");
-if (!footer.includes("Enter your email here") || !footer.includes("Join the community")) throw new Error("Footer newsletter is incomplete");
+if (!newsletter.includes("Enter your email here") || !newsletter.includes("Join the community") || !newsletter.includes('/api/newsletter')) throw new Error("Footer newsletter is incomplete");
 if (!footer.includes("Copyright © 2026, Tun Online Armenian School. All rights reserved. For every Armenian who loves their home.")) throw new Error("Footer copyright is incorrect");
 if (allSource.includes("NEXT_PUBLIC_OPENAI_API_KEY")) throw new Error("OpenAI key must not be public");
 console.log("Source verification passed: required structure, Tun promotions, footer, and no database dependencies.");

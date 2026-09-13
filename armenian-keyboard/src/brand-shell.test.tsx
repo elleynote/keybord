@@ -12,7 +12,7 @@ describe("Tun shell", () => {
     expect(headerSource).toContain('height="56"');
   });
 
-  it("contains the Tun ecosystem footer and Mailchimp signup", () => {
+  it("contains the Tun ecosystem footer and protected newsletter signup", () => {
     const html = renderToStaticMarkup(<Footer />);
     expect(html).toContain("Learn Armenian Online");
     expect(html).toContain("Armenian Translation Tool");
@@ -22,7 +22,11 @@ describe("Tun shell", () => {
     expect(html).toContain("hello@tunapp.com");
     expect(html).toContain("Enter your email here");
     expect(html).toContain("Join the community");
-    expect(html).toContain("b_cf919aa58fa15934e1e2a04a0_3feeed30f4");
+    expect(html).toContain('action="/api/newsletter"');
+    expect(html).toContain('_newsletter_company');
+    expect(html).toContain('_newsletter_started_at');
+    expect(html).toContain('data-action="newsletter_signup"');
+    expect(html).not.toContain("list-manage.com/subscribe/post");
     expect(html).toContain("Copyright © 2026, Tun Online Armenian School. All rights reserved. For every Armenian who loves their home.");
     expect(html.indexOf("Blog")).toBeLessThan(html.indexOf("Quizzes"));
     expect(html.indexOf("Quizzes")).toBeLessThan(html.indexOf("Contact Us"));
