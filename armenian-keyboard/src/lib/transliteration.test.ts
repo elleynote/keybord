@@ -11,4 +11,7 @@ describe("transliteration", () => {
   it("uses vo for initial ո", () => {
     expect(transliterate("որդի", "eastern").toLowerCase()).toMatch(/^v/);
   });
+  it("shows ու as u in the transliteration helper", () => {
+    expect(transliterate("շուն", "western")).toBe("shun");
+  });
 });

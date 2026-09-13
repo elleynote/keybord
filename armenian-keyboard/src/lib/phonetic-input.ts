@@ -34,7 +34,7 @@ const ARMENIAN_COMMA = "՝";
 const ARMENIAN_FULL_STOP = "։";
 
 const mappings: Mapping[] = [
-  { sequence: "yev", eastern: "և", western: "եւ" },
+  { sequence: "yev", eastern: "և" },
   { sequence: "chh", eastern: "չ" },
   { sequence: "tsh", eastern: "ց" },
   { sequence: "ts'", eastern: "ց" },
@@ -51,12 +51,12 @@ const mappings: Mapping[] = [
   { sequence: "gh", eastern: "ղ" },
   { sequence: "dz", eastern: "ձ", western: "ծ" },
   { sequence: "ts", eastern: "ց" },
-  { sequence: "ch", eastern: "ճ", western: "ջ" },
+  { sequence: "ch", eastern: "չ" },
   { sequence: "rr", eastern: "ռ" },
   { sequence: "ee", eastern: "է" },
   { sequence: "oo", eastern: "ու" },
   { sequence: "ou", eastern: "ու" },
-  { sequence: "ev", eastern: "և", western: "եւ" },
+  { sequence: "ev", eastern: "և" },
   { sequence: "ye", eastern: "յե" },
   { sequence: "vo", eastern: "վո" },
 ];
@@ -86,7 +86,7 @@ const easternLetters: Record<string, string> = {
   v: "վ",
   w: "ւ",
   x: "խ",
-  y: "ը",
+  y: "յ",
   z: "զ",
 };
 
@@ -130,10 +130,8 @@ function uppercaseFirstArmenian(value: string): string {
 }
 
 function resolveMapping(mapping: Mapping, dialect: Dialect, orthography: Orthography): string {
-  const value = dialect === "western" ? mapping.western ?? mapping.eastern : mapping.eastern;
-  if (value === "և" && orthography === "traditional") return "եւ";
-  if (value === "եւ" && orthography === "reformed") return "և";
-  return value;
+  void orthography;
+  return dialect === "western" ? mapping.western ?? mapping.eastern : mapping.eastern;
 }
 
 function getLetterTable(dialect: Dialect): Record<string, string> {
@@ -152,7 +150,7 @@ function transliterateLowerLatin(latin: string, dialect: Dialect, orthography: O
     }
 
     if (index === 0 && lower.startsWith("yev", index)) {
-      result += orthography === "traditional" || dialect === "western" ? "եւ" : "և";
+      result += "և";
       index += 3;
       continue;
     }
