@@ -52,9 +52,9 @@ const commonPhoneticHelpers: Record<string, string> = {
   վ: "v",
   ր: "r",
   ց: "ts",
-  ւ: "w",
+  ւ: "v",
   փ: "p",
-  ք: "q",
+  ք: "k",
   օ: "o",
   ֆ: "f",
 };
