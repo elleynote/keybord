@@ -9,5 +9,6 @@ describe("KeyboardApp", () => {
     expect(html).toContain("Type Armenian phonetically");
     expect(html).toContain("sh → շ · ts → ց · x/kh → խ · gh → ղ · ye → ե");
     expect(html).toContain("Typing help");
+    expect(html).not.toContain("Listen");
   });
 });
