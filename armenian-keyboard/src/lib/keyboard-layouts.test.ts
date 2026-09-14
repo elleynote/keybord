@@ -20,6 +20,8 @@ describe("keyboard layouts", () => {
     expect(helperFor("ձ", "eastern")).toBe("dz");
     expect(helperFor("է", "eastern")).toBe("e");
     expect(helperFor("փ", "eastern")).toBe("p");
+    expect(helperFor("ւ", "eastern")).toBe("v");
+    expect(helperFor("ք", "eastern")).toBe("k");
     expect(helperFor("օ", "eastern")).toBe("o");
     expect(helperFor("չ", "eastern")).toBe("ch");
     expect(helperFor("պ", "eastern")).toBe("p");
@@ -35,6 +37,8 @@ describe("keyboard layouts", () => {
     expect(helperFor("ճ", "western")).toBe("j");
     expect(helperFor("ջ", "western")).toBe("ch");
     expect(helperFor("ձ", "western")).toBe("tz");
+    expect(helperFor("ւ", "western")).toBe("v");
+    expect(helperFor("ք", "western")).toBe("k");
     expect(helperFor("պ", "western")).toBe("b");
     expect(helperFor("կ", "western")).toBe("g");
     expect(helperFor("բ", "western")).toBe("p");
