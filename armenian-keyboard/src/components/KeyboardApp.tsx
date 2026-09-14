@@ -148,20 +148,6 @@ export function KeyboardApp() {
     }
   }
 
-  function listen() {
-    if (!preferences.text.trim()) return setStatus("Type some Armenian text first.");
-    if (!("speechSynthesis" in window)) return setStatus("Speech playback is not available in this browser.");
-    const voices = window.speechSynthesis.getVoices();
-    const voice = voices.find((candidate) => candidate.lang.toLowerCase().startsWith("hy"));
-    if (!voice) return setStatus("Armenian voice is not available in this browser.");
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(preferences.text);
-    utterance.lang = voice.lang;
-    utterance.voice = voice;
-    window.speechSynthesis.speak(utterance);
-    setStatus("Playing Armenian audio.");
-  }
-
   async function translateToEnglish() {
     if (!preferences.text.trim()) return;
     setTranslating(true);
@@ -221,7 +207,6 @@ export function KeyboardApp() {
                 <div className="editor-toolbar">
                   <div className="editor-counts"><span>Characters: {characters}</span><span>Words: {words}</span></div>
                   <div className="editor-actions">
-                    <button type="button" onClick={listen}>◖ Listen</button>
                     <button type="button" onClick={() => updatePreferences({ text: "" })}>⌫ Clear</button>
                     <button type="button" onClick={() => void pasteText()}>▣ Paste</button>
                     <button type="button" onClick={() => void copyText()}>▢ Copy</button>
