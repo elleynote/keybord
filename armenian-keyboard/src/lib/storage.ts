@@ -28,7 +28,7 @@ export function loadPreferences(storage?: Storage): Preferences {
     const parsed = JSON.parse(target.getItem(PREFERENCES_KEY) ?? "null") as StoredPreferences | null;
     const merged = { ...defaultPreferences, ...(parsed ?? {}) };
 
-    if (parsed?.version !== PREFERENCES_VERSION && parsed?.layout === "standard" && (parsed.text ?? "") === "") {
+    if (parsed?.layout === "standard" && (parsed.text ?? "") === "") {
       merged.layout = "phonetic";
     }
 
