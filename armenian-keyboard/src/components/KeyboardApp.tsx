@@ -40,6 +40,10 @@ const phoneticHelpItems = [
   "s'h -> սհ",
 ] as const;
 
+export function shouldHandlePhysicalPhoneticInput(event: { layout: KeyboardLayout; ctrlKey: boolean; metaKey: boolean; altKey: boolean }) {
+  return !event.ctrlKey && !event.metaKey && !event.altKey;
+}
+
 export function KeyboardApp() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const phoneticSessionRef = useRef<PhoneticSession | null>(null);
@@ -99,7 +103,7 @@ export function KeyboardApp() {
   }
 
   function handlePhysicalKey(event: KeyboardEvent<HTMLTextAreaElement>) {
-    if (preferences.layout !== "phonetic" || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (!shouldHandlePhysicalPhoneticInput({ layout: preferences.layout, ctrlKey: event.ctrlKey, metaKey: event.metaKey, altKey: event.altKey })) return;
     const textarea = textareaRef.current;
     const result = applyPhoneticEditorKey({
       value: preferences.text,
