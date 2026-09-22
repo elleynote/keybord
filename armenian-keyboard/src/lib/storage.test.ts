@@ -23,6 +23,13 @@ describe("storage", () => {
     expect(loadPreferences(storage)).toEqual({ dialect: "western", layout: "phonetic", orthography: "traditional", text: "" });
   });
 
+  it("reopens empty saved standard sessions in phonetic mode", () => {
+    const storage = new MemoryStorage();
+    storage.setItem("tun-keyboard-preferences", JSON.stringify({ version: 2, dialect: "western", layout: "standard", orthography: "traditional", text: "" }));
+
+    expect(loadPreferences(storage)).toEqual({ dialect: "western", layout: "phonetic", orthography: "traditional", text: "" });
+  });
+
   it("round-trips preferences", () => {
     const storage = new MemoryStorage();
     savePreferences({ dialect: "eastern", layout: "standard", orthography: "traditional", text: "Բարեւ" }, storage);
